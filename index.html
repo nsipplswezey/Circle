@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+    <meta charset="utf-8">
+    <head>
+
+        <!-- Util -->
+        <script type="text/javascript" src="underscore.js"></script>
+
+
+        <link rel="icon" type="image/png" href="favicon.ico"/>
+        <link href="circleABS.css" rel="stylesheet" type="text/css"/>
+        <link href="linechart.css" rel="stylesheet" type="text/css"/>
+
+
+        <link href="Style.css" rel="stylesheet" type="text/css"/>
+
+        <script src="d3.min.js"></script>
+        <script src="linechart.js"></script>
+        <script src="agentviewer.js"></script>
+        <script src="jnovascriptx.min.js"></script>
+
+        <title>CircleABS Infection Simulations</title>
+    </head>
+
+    <body>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Page Header: The Circle Game -->
+
+
+        <!--         <div class="headerBackground"></div>
+
+<div class="header">
+<h1> The Circle Game </h1>
+<h2> Understanding the Spread of Infectious Disease Through Interactive Simulation </h2>
+<h3> by Nick Sippl-Swezey, Wayne Getz, Richard Salter </h3>
+</div>
+
+<hr>
+-->
+
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Page Intro: The Circle Game -->
+
+        <!--         <div class="intro">
+<div class="columnLeft">
+<p><i>"In science, if you know what you are doing, you should not be doing it.  In engineering, if you do not know what you are doing, you should not be doing it.  Of course, you seldom, if ever, see either pure state."</i></p>
+<div class="quoteCitation">&mdash;Richard Hamming, <a href="http://www.amazon.com/dp/B000P2XFPA">The Art of Doing Science and Engineering</a></div>
+
+<p>How can we design systems when we don't know what we're doing?</p>
+
+<p>The most exciting engineering challenges lie on the <b>boundary of theory and the unknown</b>.  Not so unknown that they're hopeless, but not enough theory to predict the results of our decisions.  Systems at this boundary often rely on <i>emergent behavior</i> &mdash; high-level effects that arise indirectly from low-level interactions.</p>
+
+<p>When designing at this boundary, the challenge lies not in constructing the system, but in understanding it.   In the absence of theory, we must develop an <i>intuition</i> to guide our decisions.  The design process is thus one of exploration and discovery.</p>
+
+</div>
+<div class="columnRight" style="width:401px;">
+
+<p>How do we explore?  If you move to a new city, you might learn the territory by walking around.  Or you might peruse a map.  But far more effective than either is <i>both together</i> &mdash; a street-level experience with higher-level guidance.</p>
+
+<p>Likewise, the most powerful way to gain insight into a system is by <i>moving between levels of abstraction</i>.  Many designers do this instinctively.  But it's easy to get stuck on the ground, experiencing concrete systems with no higher-level view.  It's also easy to get stuck in the clouds, working entirely with abstract equations or aggregate statistics.</p>
+
+<p>This interactive essay presents the <b>ladder of abstraction</b>, a technique for thinking <i>explicitly</i> about these levels, so a designer can move among them consciously and confidently.</p>
+
+<p>I believe that an essential skill of the modern system designer will be using the <i>interactive medium</i> to move fluidly around the ladder of abstraction.</p>
+
+</div>
+<div class="endOfColumns"></div>
+</div> -->
+
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- The Circle Game: Susceptible / Infected (SI) -->
+
+        <!--         <div class="chapter">
+<div class="chapterHeader"><span>Let's Play a Game</span></div>
+
+<div style="width:100px; height:20px;"></div>
+
+<div class="tangle" data-model="game">
+<div class="columnLeft">
+<p><img class="novaIcon" src="Images/Icons/32x32.png" alt="" width="40" height="39">We'll start with an in-depth example &mdash; a table top game called <b>the circle game</b>. The game is played as follows:</p>
+</div>
+<div class="endOfColumns"></div>
+
+<div style="width:100px; height:20px;"></div>
+
+
+
+<div class="columnLeft">
+<p>To the right is an algorithm which encodes this strategy.</p>
+</div>
+<div class="columnRight">
+<div class="algorithm">
+<div class="algorithmHeader">At each step:</div>
+<div class="algorithmLine">Count your sick neighbors.</div>
+<div class="algorithmLine">Compare your dice role <span data-var="myDice" data-format="%.0f"></span> to your number of sick neighbors.</div>
+<div class="algorithmLine">If your dice roll <span data-var="myDice" data-format="%.0f"></span> is less than your number of sick neighbors turn your card.</div>
+<div class="algorithmLine">Player 1's current state is <span data-var="p1State" data-format="%.0f"></span> and their roll is <span data-var="p1Roll" data-format="%.0f"></span> and the number of sick neighbors is <span data-var="p1SickNeighbors" data-format="%.0f"></span> </div>
+<div class="algorithmLine">Player 2's current state is <span data-var="p2State" data-format="%.0f"></span> and their roll is <span data-var="p2Roll" data-format="%.0f"></span> and the number of sick neighbors is <span data-var="p2SickNeighbors" data-format="%.0f"></span> </div>
+<div class="algorithmLine">Player 3's current state is <span data-var="p3State" data-format="%.0f"></span> and their roll is <span data-var="p3Roll" data-format="%.0f"></span> and the number of sick neighbors is <span data-var="p3SickNeighbors" data-format="%.0f"></span> </div>
+<div class="algorithmLine">Player 4's current state is <span data-var="p4State" data-format="%.0f"></span> and their roll is <span data-var="p4Roll" data-format="%.0f"></span> and the number of sick neighbors is <span data-var="p4SickNeighbors" data-format="%.0f"></span> </div>
+<div class="algorithmLine">Player 5's current state is <span data-var="p5State" data-format="%.0f"></span> and their roll is <span data-var="p5Roll" data-format="%.0f"></span> and the number of sick neighbors is <span data-var="p5SickNeighbors" data-format="%.0f"></span> </div>
+</div>
+</div>
+<div class="endOfColumns"></div>
+
+
+<div class="columnLeft">
+<p>Track your data with the graph to the right</p>
+</div>
+<div class="columnRight">
+
+<div>
+Turn:
+<div style="display:inline-block; position:relative; top:-20px; left:9px;"
+class="Slider" data-var="time lockedTime" data-width="330" data-min="0" data-max="3" data-step="1" data-format="Turn %.0f " data-margin="25"></div>
+</div>
+</div>
+
+</div>
+
+</div> -->
+
+
+
+
+
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Chapter The First Simulation: Susceptible / Infected (SI) -->
+
+        <!--         <div class="chapter">
+<div class="chapterHeader"><span>Susceptible / Infected (SI)</span></div>
+
+<div style="width:100px; height:6px;"></div>
+
+<div class="columnLeft">
+<p><img class="novaIcon" src="Images/Icons/32x32.png" alt="" width="40" height="39">We'll start with an in-depth example &mdash; a table top game called <b>the circle game</b>. The game is played as follows:</p>
+</div>
+
+<div class="columnRight">
+<p>This is the second paragraph</p>
+
+</div>
+
+<div class="endOfColumns"></div>
+
+
+</div> -->
+
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Susceptible / Infected (SI) Chapter Header -->
+
+
+        <div class="chapter">
+            <div class="chapterHeader"><span>Susceptible / Infected (SI)</span></div>
+
+            <div class="NovaControls">
+                <div>
+                    <button name="resetSI" onClick="javascript:novaManagerSI.reset()">Reset</button>
+                    <button name="runSI" onClick="javascript:novaManagerSI.run()">Run</button>
+                    <button name="stopSI" onClick="javascript:novaManagerSI.stop()">Stop</button>
+                    <button name="continueSI" onClick="javascript:novaManagerSI.restart()">Continue</button>
+                    <button name="stepSI" onClick="javascript:novaManagerSI.step()">Step</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Time: <input id="timevalSI" type="text" size="4" value="0" readonly="true"/>
+                </div>
+                <div>
+                    Simulation Delay (ms):
+                    <input id="simspeedSI" type="range" name="points" min="0" max="2000" value="0" step="10"
+                           onchange="novaManager.showSliderValue('simspeedvalSI', this.value); javascript:novaManagerSI.fixSpeed(this.value);"/>
+                    <input id="simspeedvalSI" type="text" size="4" value="1" readonly="true"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Duration
+                    <input id="simdurSI" type="range" name="points" min="0" max="100"
+                           value="30" step="1" onchange="novaManagerSI.showSliderValue('simdurvalSI', this.value);
+                                                         novaManagerSI.fixClock('hi', this.value);"/>
+                    <input id="simdurvalSI" type="text" size="4" value="1" readonly="true"/>
+                </div>
+            </div>
+            <hr>
+            <div>
+                Population
+                <input id="countSI" type="range" name="points" min="5" max="50" value="30" step="1"
+                       onchange="novaManagerSI.showSliderValue('countvalSI', this.value);novaManagerSI.reset()" />
+                <input id="countvalSI" type="text" size="4" value="1" readonly="true"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Neighborhood Size
+                <input id="nhoodsizeSI" type="range" name="points" min="0" max="10" value="0" step="1"
+                       onchange="novaManagerSI.showSliderValue('nhoodsizevalSI', this.value); propsSI.nhoodsize = this.value" />
+                <input id="nhoodsizevalSI" type="text" size="4" value="1" readonly="true"/>
+            </div>
+            <br>
+
+            <table>
+                <tr>
+                    <td><div id="agntvcSI" class="agentvc"></div></td>
+                    <td>&nbsp;</td>
+                    <td>
+                        <div id="compControlSI">
+                            <label for="compareSI">Comparison?</label>
+                            <input id="compareSI" type="checkbox"
+                                   onchange="novaManagerSI.resetCompare(this.checked); document.getElementById('compareSIReset').disabled=!this.checked"/>
+                            <button id="compareSIReset"
+                                    disabled="!(document.getElementById('compareSI').checked)")
+                                    onClick="novaManagerSI.resetCompare(document.getElementById('compareSI').checked)">Comparison Reset</button>
+                            &nbsp;
+                            <input name="colSelSI" id="colSelSIa" type="radio" onClick="novaManagerSI.setFill(0)" checked="true">
+                            <label for="colSelSIa"><svg width="10" height="10"><rect width="10" height="10" style="fill:red;"/></svg></label>
+                            <input name="colSelSI" id="colSelSIb" type="radio" value="bar" onClick="novaManagerSI.setFill(1)">
+                            <label for="colSelSIb"><svg width="10" height="10"><rect width="10" height="10" style="fill:blue;"/></svg></label>
+                            <input name="colSelSI" id="colSelSIc" type="radio" value="foo" onClick="novaManagerSI.setFill(2)">
+                            <label for="colSelSIc"><svg width="10" height="10"><rect width="10" height="10" style="fill:green;"/></svg></label>
+                            <input name="colSelSI" id="colSelSId" type="radio" value="bar" onClick="novaManagerSI.setFill(3)">
+                            <label for="colSelSId"><svg width="10" height="10"><rect width="10" height="10" style="fill:orange;"/></svg></label>
+                            <input name="colSelSI" id="colSelSIe" type="radio" value="bar" onClick="novaManagerSI.setFill(4)">
+                            <label for="colSelSIe"><svg width="10" height="10"><rect width="10" height="10" style="fill:purple;"/></svg></label>
+                            <input name="colSelSI" id="colSelSIf" type="radio" value="foo" onClick="novaManagerSI.setFill(5)">
+                            <label for="colSelSIf"><svg width="10" height="10"><rect width="10" height="10" style="fill:magenta;"/></svg></label>
+                            <input name="colSelSI" id="colSelSIg" type="radio" value="bar" onClick="novaManagerSI.setFill(6)">
+                            <label for="colSelSIg"><svg width="10" height="10"><rect width="10" height="10" style="fill:pink;"/></svg></label>
+                            <input name="colSelSI" id="colSelSIh" type="radio" value="bar" onClick="novaManagerSI.setFill(7)">
+                            <label for="colSelSIh"><svg width="10" height="10"><rect width="10" height="10" style="fill:cyan;"/></svg></label>
+                        </div>
+                        <div id="datchartSI", class="datchart"></div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Susceptible / Infected / Susceptible (SIS) -->
+
+        <!--         <div class="chapter">
+<div class="chapterHeader"><span>Susceptible / Infected / Susceptible (SIS)</span></div>
+
+<div style="width:100px; height:6px;"></div>
+
+
+<div class="columnLeft">
+<p><img class="novaIcon" src="Images/Icons/32x32.png" alt="" width="40" height="39">We'll start with an in-depth example &mdash; a table top game called <b>the circle game</b>. The game is played as follows:</p>
+</div>
+<div class="columnRight">
+<p>We'll start with an in-depth example &mdash; a table top game called <b>the circle game</b>. The game is played as follows:</p>
+
+</div>
+<div class="endOfColumns"></div>
+
+
+
+</div> -->
+
+
+
+        <div class=chapter>
+            <div class="chapterHeader"><span>Susceptible / Infected / Susceptible (SIS)</span></div>
+
+            <div class="NovaControls">
+                <div>
+                    <button name="resetSIS" onClick="javascript:novaManagerSIS.reset()">Reset</button>
+                    <button name="runSIS" onClick="javascript:novaManagerSIS.run()">Run</button>
+                    <button name="stopSIS" onClick="javascript:novaManagerSIS.stop()">Stop</button>
+                    <button name="continueSIS" onClick="javascript:novaManagerSIS.restart()">Continue</button>
+                    <button name="stepSIS" onClick="javascript:novaManagerSIS.step()">Step</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Time: <input id="timevalSIS" type="text" size="4" value="0" readonly="true"/>
+                </div>
+                <div>
+                    Simulation Delay (ms):
+                    <input id="simspeedSIS" type="range" name="points" min="0" max="2000" value="0" step="10"
+                           onchange="novaManagerSIS.showSliderValue('simspeedvalSIS', this.value); javascript:novaManagerSIS.fixSpeed(this.value);"/>
+                    <input id="simspeedvalSIS" type="text" size="4" value="1" readonly="true"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Duration
+                    <input id="simdurSIS" type="range" name="points" min="0" max="100"
+                           value="30" step="1" onchange="novaManagerSIS.showSliderValue('simdurvalSIS', this.value);
+                                                         novaManagerSIS.fixClock('hi', this.value);"/>
+                    <input id="simdurvalSIS" type="text" size="4" value="1" readonly="true"/>
+                </div>
+            </div>
+            <hr>
+            <div>
+                Population
+                <input id="countSIS" type="range" name="points" min="5" max="50" value="30" step="1"
+                       onchange="novaManagerSIS.showSliderValue('countvalSIS', this.value);novaManagerSIS.reset()" />
+                <input id="countvalSIS" type="text" size="4" value="1" readonly="true"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Neighborhood Size
+                <input id="nhoodsizeSIS" type="range" name="points" min="0" max="10" value="0" step="1"
+                       onchange="novaManagerSIS.showSliderValue('nhoodsizevalSIS', this.value); propsSIS.nhoodsize = this.value" />
+                <input id="nhoodsizevalSIS" type="text" size="4" value="1" readonly="true"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Recovery Level
+                <input id="recoverylevelSIS" type="range" name="points" min="0" max="10" value="1" step="1"
+                       onchange="novaManagerSIS.showSliderValue('recoverylevelvalSIS', this.value); propsSIS.recoverylevel = this.value" />
+                <input id="recoverylevelvalSIS" type="text" size="4" value="1" readonly="true"/>
+            </div>
+            <br>
+
+            <table>
+                <tr>
+                    <td><div id="agntvcSIS" class="agntvc"></div></td>
+                    <td>&nbsp;</td>
+                    <td>
+
+                        <div id="compControlSIS">
+                            <label for="compareSIS">Comparison?</label>
+                            <input id="compareSIS" type="checkbox"
+                                   onchange="novaManagerSIS.resetCompare(this.checked); document.getElementById('compareSISReset').disabled=!this.checked"/>
+                            <button id="compareSISReset"
+                                    disabled="!(document.getElementById('compareSIS').checked)")
+                                    onClick="novaManagerSIS.resetCompare(document.getElementById('compareSIS').checked)">Comparison Reset</button>
+                            &nbsp;
+                            <input name="colSelSIS" id="colSelSISa" type="radio" onClick="novaManagerSIS.setFill(0)" checked="true">
+                            <label for="colSelSISa"><svg width="10" height="10"><rect width="10" height="10" style="fill:red;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISb" type="radio" value="bar" onClick="novaManagerSIS.setFill(1)">
+                            <label for="colSelSISb"><svg width="10" height="10"><rect width="10" height="10" style="fill:blue;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISc" type="radio" value="foo" onClick="novaManagerSIS.setFill(2)">
+                            <label for="colSelSISc"><svg width="10" height="10"><rect width="10" height="10" style="fill:green;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISd" type="radio" value="bar" onClick="novaManagerSIS.setFill(3)">
+                            <label for="colSelSISd"><svg width="10" height="10"><rect width="10" height="10" style="fill:orange;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISe" type="radio" value="bar" onClick="novaManagerSIS.setFill(4)">
+                            <label for="colSelSISe"><svg width="10" height="10"><rect width="10" height="10" style="fill:purple;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISf" type="radio" value="foo" onClick="novaManagerSIS.setFill(5)">
+                            <label for="colSelSISf"><svg width="10" height="10"><rect width="10" height="10" style="fill:magenta;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISg" type="radio" value="bar" onClick="novaManagerSIS.setFill(6)">
+                            <label for="colSelSISg"><svg width="10" height="10"><rect width="10" height="10" style="fill:pink;"/></svg></label>
+                            <input name="colSelSIS" id="colSelSISh" type="radio" value="bar" onClick="novaManagerSIS.setFill(7)">
+                            <label for="colSelSISh"><svg width="10" height="10"><rect width="10" height="10" style="fill:cyan;"/></svg></label>
+                        </div>
+                        <div id="datchartSIS"class="datchart"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Susceptible / Infected / Recovered (SIR) -->
+
+        <!--         <div class="chapter">
+<div class="chapterHeader"><span>Susceptible / Infected / Recovered (SIR)</span></div>
+
+<div style="width:100px; height:6px;"></div>
+
+
+<div class="columnLeft">
+<p><img class="novaIcon" src="Images/Icons/32x32.png" alt="" width="40" height="39">We'll start with an in-depth example &mdash; a table top game called <b>the circle game</b>. The game is played as follows:</p>
+</div>
+<div class="columnRight">
+<p>We'll start with an in-depth example &mdash; a table top game called <b>the circle game</b>. The game is played as follows:</p>
+
+</div>
+<div class="endOfColumns"></div>
+
+
+
+</div> -->
+
+
+        <div class="chapter">
+            <div class="chapterHeader"><span>Susceptible / Infected / Recovered (SIR)</span></div>
+
+            <div class="NovaControls">
+                <div>
+                    <button name="resetSIR" onClick="javascript:novaManagerSIR.reset()">Reset</button>
+                    <button name="runSIR" onClick="javascript:novaManagerSIR.run()">Run</button>
+                    <button name="stopSIR" onClick="javascript:novaManagerSIR.stop()">Stop</button>
+                    <button name="continueSIR" onClick="javascript:novaManagerSIR.restart()">Continue</button>
+                    <button name="stepSIR" onClick="javascript:novaManagerSIR.step()">Step</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Time: <input id="timevalSIR" type="text" size="4" value="0" readonly="true"/>
+                </div>
+                <div>
+                    Simulation Delay (ms):
+                    <input id="simspeedSIR" type="range" name="points" min="0" max="2000" value="0" step="10"
+                           onchange="novaManagerSIR.showSliderValue('simspeedvalSIR', this.value); javascript:novaManagerSIR.fixSpeed(this.value);"/>
+                    <input id="simspeedvalSIR" type="text" size="4" value="1" readonly="true"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    Duration
+                    <input id="simdurSIR" type="range" name="points" min="0" max="100"
+                           value="30" step="1" onchange="novaManagerSIR.showSliderValue('simdurvalSIR', this.value);
+                                                         novaManagerSIR.fixClock('hi', this.value);"/>
+                    <input id="simdurvalSIR" type="text" size="4" value="1" readonly="true"/>
+                </div>
+            </div>
+            <hr>
+            <div>
+                Population
+                <input id="countSIR" type="range" name="points" min="5" max="50" value="30" step="1"
+                       onchange="novaManagerSIR.showSliderValue('countvalSIR', this.value);novaManagerSIR.reset()" />
+                <input id="countvalSIR" type="text" size="4" value="1" readonly="true"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Neighborhood Size
+                <input id="nhoodsizeSIR" type="range" name="points" min="0" max="10" value="0" step="1"
+                       onchange="novaManagerSIR.showSliderValue('nhoodsizevalSIR', this.value); propsSIR.nhoodsize = this.value" />
+                <input id="nhoodsizevalSIR" type="text" size="4" value="1" readonly="true"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                Recovery Level
+                <input id="recoverylevelSIR" type="range" name="points" min="0" max="10" value="1" step="1"
+                       onchange="novaManagerSIR.showSliderValue('recoverylevelvalSIR', this.value); propsSIR.recoverylevel = this.value" />
+                <input id="recoverylevelvalSIR" type="text" size="4" value="1" readonly="true"/>
+            </div>
+            <br>
+
+            <table>
+                <tr>
+                    <td><div id="agntvcSIR" class="agntvc"></div></td>
+                    <td>&nbsp;</td>
+                    <td><div id="datchartSIR"class="datchart"></div></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <script src="circleABS.js"></script>
+    </body>
+</html>
