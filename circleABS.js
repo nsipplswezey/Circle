@@ -27,7 +27,7 @@ function myAgentSI(id) {
   var nbrTot = new Term("nbrTot");
   nbrTot.exp = "(function() {"+
     "var id = this.agent.id, tot = 0, count = +this.agentvector.count;"+
-    "for (i = 1; i <= propsSI.nhoodsize; i++) {"+
+    "for (i = 1; i <= propsSI.nhoodsize/2; i++) {"+
     "var j = ((id + i) % count);"+
     "tot += this.agentvector.vector[j].cap.scope.outpt;"+
     "j = ((id - i) + count) % count;"+
@@ -142,7 +142,7 @@ function myAgentSIS(id) {
   var nbrTot = new Term("nbrTot");
   nbrTot.exp = "(function() {"+
     "var id = this.agent.id, tot = 0, count = +this.agentvector.count;"+
-    "for (i = 1; i <= propsSIS.nhoodsize; i++) {"+
+    "for (i = 1; i <= propsSIS.nhoodsize/2; i++) {"+
     "var j = ((id + i) % count);"+
     "tot += (this.agentvector.vector[j].cap.scope.outpt == 1);"+
     "j = ((id - i) + count) % count;"+
@@ -262,7 +262,7 @@ function myAgentSIR(id) {
   var nbrTot = new Term("nbrTot");
   nbrTot.exp = "(function() {"+
     "var id = this.agent.id, tot = 0, count = +this.agentvector.count;"+
-    "for (i = 1; i <= propsSIR.nhoodsize; i++) {"+
+    "for (i = 1; i <= propsSIR.nhoodsize/2; i++) {"+
     "var j = ((id + i) % count);"+
     "tot += (this.agentvector.vector[j].cap.scope.outpt == 1);"+
     "j = ((id - i) + count) % count;"+
