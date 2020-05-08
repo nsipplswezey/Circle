@@ -172,7 +172,7 @@ class="Slider" data-var="time lockedTime" data-width="330" data-min="0" data-max
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <!-- Susceptible / Infected (SI) Chapter Header -->
-
+        <p id="placeholder"></p>
 
         <div class="chapter">
             <div class="chapterHeader"><span>Susceptible / Infected (SI)</span></div>
@@ -439,4 +439,53 @@ class="Slider" data-var="time lockedTime" data-width="330" data-min="0" data-max
 
         <script src="circleABS.js"></script>
     </body>
+
+    <script> 
+        var dice = {
+            sides: 6,
+            roll: function () {
+                var randomNumber = Math.floor(Math.random() * this.sides) + 1;
+                return randomNumber;
+            }
+            }
+
+            //Prints dice roll to the page
+
+            function printNumber(number) {
+                var placeholder = document.getElementById('placeholder');
+                placeholder.innerHTML = number;
+            }
+
+            
+            var placeholder = document.getElementById('placeholder');
+
+            var button = document.getElementById('button');
+
+            placeholder.onclick = function() {
+                console.log('clicked')
+                var result = dice.roll();
+                printNumber(result);
+            };
+    </script>
+
+
+    <style>
+        #placeholder {
+            height: 100px;
+            width: 100px;
+            padding: 50px;
+            margin: 50px auto;
+            border: 1px solid gray;
+            border-radius: 10px;  
+            font-size:80px;
+            font-family: Helvetica, Arial, sans-serif;
+            text-align: center;
+            color: rgb(0, 0, 0);
+            line-height:100px;
+            -webkit-user-select: none; /* Safari */        
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* Standard */
+        }
+    </style>
 </html>
